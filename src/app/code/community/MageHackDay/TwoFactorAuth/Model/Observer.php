@@ -2,6 +2,7 @@
 
 class MageHackDay_TwoFactorAuth_Model_Observer {
 
+
     /**
      * Listens to the admin_user_authenticate_after Event and checks whether the user has access to areas that are configured
      * to be protected by Two Factor Auth. If so, send the user to either add a Two Factor Auth to their Account, or enter a
@@ -13,15 +14,19 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
             return $this;
         }
 
+        // if the IP is in the whitelist, then we can skip the 2FA check
+        if ( Mage::helper('twofactorauth')->isIpInWhitelist() ) return $this;
+
         $event 		= $observer->getEvent();
         $username 	= $event->getUsername();
+
         /** @var $user Mage_Admin_Model_User */
         $user 		= $event->getUser();
         $oRole = $user->getRole();
         $aResources = $oRole->getResourcesList2D();
         $vSerializedProtectedResources = Mage::getStoreConfig('admin/security/twofactorauth_protected_resources');
         $aProtectedResources = unserialize($vSerializedProtectedResources);
-        $bTfaRequired = false;
+
         foreach($aProtectedResources as $vResourceId => $aProtectedResource){
             if(Mage::getSingleton('admin/session')->isAllowed($aProtectedResource['resource_id'])){
                 $bTfaRequired = true;
@@ -143,4 +148,6 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
     {
         return Mage::getSingleton('customer/session');
     }
+
+
 }
