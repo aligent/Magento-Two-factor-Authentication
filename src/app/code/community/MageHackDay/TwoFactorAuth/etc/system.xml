@@ -34,6 +34,18 @@
                             <comment><![CDATA[Select which resources require two factor authentication <br>
                             ]]></comment>
                         </twofactorauth_protected_resources>
+                        <twofactorauth_ip_whitelist translate="label comment">
+                            <label>IP Whitelist</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[A list of IP addresses which can bypass the Two Factor Authentication. <br>
+                            Each IP address should be on a separate line. <br>
+                            Where no IP addresses are added, the normal Protected Resources settings will apply. <br>
+                            ]]></comment>
+                        </twofactorauth_ip_whitelist>
                     </fields>
                 </security>
             </groups>
