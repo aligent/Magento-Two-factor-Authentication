@@ -26,6 +26,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
         $aResources = $oRole->getResourcesList2D();
         $vSerializedProtectedResources = Mage::getStoreConfig('admin/security/twofactorauth_protected_resources');
         $aProtectedResources = unserialize($vSerializedProtectedResources);
+        $bTfaRequired = false;
 
         foreach($aProtectedResources as $vResourceId => $aProtectedResource){
             if(Mage::getSingleton('admin/session')->isAllowed($aProtectedResource['resource_id'])){
